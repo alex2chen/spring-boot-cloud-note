@@ -2,11 +2,17 @@
 - [api gateway Zuul](https://springcloud.cc/spring-cloud-dalston.html#_router_and_filter_zuul)
 - [Spring Cloud Contract](https://springcloud.cc/spring-cloud-dalston.html#_spring_cloud_contract)
 
+### 推荐图书
+- Java EE开发的颠覆者 Spring Boot实战
+- Spring Boot参考指南
+- Spring Cloud微服务实战
+
 ### SpringBoot学习系列
 - [SpringBoot配置属性系列](http://www.cnblogs.com/softidea/p/6068128.html)
 
 #### 1.application.yml和bootstrap.yml区别？
-application.yml 是应用级别的配置 bootstrap.yml是系统级别的配，一般不变的放到bootstrap.yml 需要随业务变得放到application.yml
+bootstrap.yml可以理解成系统级别的一些参数配置，这些参数一般是不会变动的<br/>
+application.yml 可以用来定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 #### 2.springboot新增改进注解
 	@Autowired            忽略吧
 	@ActiveProfiles       忽略吧
