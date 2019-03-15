@@ -196,9 +196,6 @@ application.yml 可以用来定义应用级别的，如果搭配spring-cloud-con
 	PropertiesLoaderUtils
 	.....
 #### 6.原理及源码分析系列
-- [事件监听源码分析](http://blog.csdn.net/liaokailin/article/details/48194777)<br/>
-	EventPublishingRunListener	<br/>
-	SimpleApplicationEventMulticaster	<br/>
 - [配置源码解析](http://blog.csdn.net/liaokailin/article/details/48864737)<br/>
 	StandardServletEnvironment	<br/>
 	AbstractEnvironment	<br/>
