@@ -7,8 +7,9 @@
 - Spring Boot参考指南
 - Spring Cloud微服务实战
 
-### SpringBoot学习系列
-- [SpringBoot配置属性系列](http://www.cnblogs.com/softidea/p/6068128.html)
+### 学习系列
+- [spring boot 笔记](https://blog.csdn.net/alex_xfboy/article/details/76685476)
+- [spring cloud 学习指南](https://blog.csdn.net/alex_xfboy/article/details/77096705)
 
 #### 1.application.yml和bootstrap.yml区别？
 bootstrap.yml可以理解成系统级别的一些参数配置，这些参数一般是不会变动的<br/>
