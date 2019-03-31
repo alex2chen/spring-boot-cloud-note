@@ -1331,7 +1331,7 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 <tr><td>person.firstName</td><td>标准驼峰规则</td><tr>
 <tr><td>person.first-name</td><td>虚线表示，推荐用于.properties和.yml文件中</td><tr>
 <tr><td>person.first_name</td><td>下划线表示，用于.properties和.yml文件的可选格式</td><tr>
-<tr><td>PERSON_FIRST_NAME </td><td>大写形式，使用系统环境变量时推荐</td><tr>
+<tr><td>PERSON_FIRST_NAME </td><td>大写形式，使用系统环境变量时推荐</td></tr>
 </table>
 
 #### 4.@Configuration vs Auto-configuration？
