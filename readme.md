@@ -1,257 +1,1405 @@
-### spring cloud 深入研究领域
-- [api gateway Zuul](https://springcloud.cc/spring-cloud-dalston.html#_router_and_filter_zuul)
-- [Spring Cloud Contract](https://springcloud.cc/spring-cloud-dalston.html#_spring_cloud_contract)
+Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。它已经成为地球上最热门的技术之一。<p/>
+
+直接看[spring cloud笔记](spring cloud note.md)
 
 ### 推荐图书
 - Java EE开发的颠覆者 Spring Boot实战
 - Spring Boot参考指南
-- Spring Cloud微服务实战
-
-### 学习系列
-- [spring boot 笔记](https://blog.csdn.net/alex_xfboy/article/details/76685476)
-- [spring cloud 学习指南](https://blog.csdn.net/alex_xfboy/article/details/77096705)
 
 #### 1.application.yml和bootstrap.yml区别？
 bootstrap.yml可以理解成系统级别的一些参数配置，这些参数一般是不会变动的<br/>
 application.yml 可以用来定义应用级别的，如果搭配spring-cloud-config使用 application.yml里面定义的文件可以实现动态替换
 #### 2.springboot新增改进注解
-	@Autowired            忽略吧
-	@ActiveProfiles       忽略吧
-	@Profile              忽略吧
-	@Aspect               忽略吧
-	@PointCut             忽略吧
-	@Around               忽略吧	
-	@AointCut             忽略吧
-	@Repository           忽略吧
-	@Service              忽略吧
-	@Component            忽略吧
-	@Controller           忽略吧
-	@RequestMapping       忽略吧
-	@ControllerAdvice     忽略吧
-    @EnableWebMvc         忽略吧(开启Web Mvc支持,关于RequestMappingHandlerMapping,RequestMappingHandlerAdapter)
-	@ExceptionHandler     忽略吧(全局处理异常,关于ExceptionHandlerExceptionResolver的)
-	@InitBinder           忽略吧(设置WebDataBinder,WebDataBinder用来自动绑定前台参数到mdel中)
-	@RequestPart          忽略吧(绑定“multipart/form-data”参数)
-	@ModelAttribute       忽略吧
-	@Cacheable            忽略吧
-	@CacheEvict           忽略吧	
-	@CachePut             忽略吧
-	@PostConstruct        忽略吧
-	@PreDestroy           忽略吧
-	@Resource             忽略吧
-	@RequestMapping       忽略吧
-	@RequestParam         忽略吧
-	@PathVariable         忽略吧
-	@RequestBody          忽略吧
-	@ResponseBody         忽略吧
-	@RequestHeader        忽略吧
-	@Required             忽略吧
-	@RestController       忽略吧
-	@Lazy                 忽略吧
-	@Scope                忽略吧
-	@Transcational        忽略吧
-	@Value                忽略吧
-	@WebAppConfiguration  忽略吧
-	@Bean                           实例化bean
-	@SpringBootApplication          等价于@Configuration + @ComponentScan + @EnableAutoConfiguration
-	@ComponentScan                  扫描包
-	@Configuration                  配置类
-	@Import                         导入配置类或者Bean
-	@ImportResource                 导入XML配置文件
-	@AutoConfigurationPackage       将加载所有符合条件的@Configuration配置
-	@EnableAutoConfiguration        auto-configuration,@AutoConfigurationPackage + @Import({EnableAutoConfigurationImportSelector.class})
-	@PropertySource                 加载属性文件,绑定值,必须使用properties文件
-	@ConfigurationProperties        绑定属性值,适用于类或方法(第三方组件),支持javax.validation注解校验
-	@EnableConfigurationProperties  开启对@ConfigurationProperties注解配置Bean的支持
-	@ConfigurationPropertiesBinding 绑定属性时属性转换	
-	
-	@ServletComponentScan          注入@WebServlet,@WebFilter,@WebListener的类
-	@GetMapping                    Spring4.3中引进的,组合注解,是@RequestMapping(method = RequestMethod.GET)的缩写 
-	@PostMapping                   同上
-	@PutMapping                    同上
-	@DeleteMapping                 同上
-	@CrossOrigin                   ajax跨域
-	@JsonComponent                 自定义JSON序列化器和反序列化器
-	@EnableRedisHttpSession        启用Redis存储管理HttpSession
-	@EnableWebSocketMessagetBroker 开启WebSocket支持
-	@MessageMapping                websocket
-	
-	@EnableScheduling               开启对计划任务的支持
-	@Scheduled                      声明这是一个计划任务，方法返回类型为void，支持cron、fixDelay、fixRate
-	@EnableAsync                    开启对异步任务的支持
-	@Async                          异步任务方法或者异步类
-	@Qualifier                      可以单独在方法中使用,改进新特性吧，相当于@Autowired
-	@Primary                        唯一可用
-	@EnableAspectJAutoProxy         启用AOP,AnnotationAwareAspectJAutoProxyCreator
-		
-	@EnableCaching                  开启缓存支持
-	@CacheConfig                    类中指定cacheNames的,对@CacheEvict(value = "user")重复定义的改进
-	
-	@EnableSpringSecurity           开启spring seccurity支持
-	@EnableGlobalMethodSecurity     启用'basic'认证
-	@EnableAuthorizationServer      oauth2 access tokens
-	@EnableOAuth2Client             安全
-	@EnableOAuth2Sso                安全
-	
-	@EnableTransactionManagement    开启注解式事务的支持
-	@EnableJpaRepositories          开启JPA
-	@NoRepositoryBean               JPA
-	@EnableJpaRepositories          JPA
-	@EntityScan                     JPA
-	@Entity                         JPA
-	@Embeddable                     JPA
-	@MappedSuperclass               JPA
-	@NodeEntity                     Neo4j
-	@EnableNeo4jRepositories        Neo4j
-	@SolrDocument                   Solr
-	@Document                       Elasticsearch
-	
-    @AutoConfigureBefore            auto-configuration,在指定的配置类初始化前加载
-	@AutoConfigureAfter             auto-configuration,在指定的配置类初始化后加载
-	@AutoConfigureOrder             auto-configuration,数越小越先初始化
-	@Conditional                    标注在类上,所有成员都会启用配置
-	@ConditionalOnClass             classpath中存在该类时起效
-	@ConditionalOnMissingClass      classpath中不存在该类时起效
-	@ConditionalOnBean              Bean条件(DI容器中存在)
-	@ConditionalOnMissingBean       Bean条件(DI容器中不存在)
-	@ConditionalOnSingleCandidate   Bean条件(DI容器中该类型Bean只有一个或@Primary的只有一个时起效)
-	@ConditionalOnProperty          参数设置或者值一致时起效
-	@ConditionalOnResource          指定的文件存在时起效
-	@ConditionalOnExpression        SpEL表达式结果为true时
-	@ConditionalOnWebApplication    Web应用环境下起效
-	@ConditionalOnNotWebApplication 非Web应用环境下起效
-	@ConditionalOnJndi              指定的JNDI存在时起效 
-    @ConditionalOnJava              指定的Java版本存在时起效	 	
-	
-	@EnableIntegration              启用spring-boot-starter-integration基于消息和其他传输协议的抽象,比如HTTP，TCP等
-	@EnableJms                      开启JMS支持
-	@JmsListener                    创建一个监听者端点,默认是支持事务性的
-	@EnableRabbit                   开启Rabbit支持(AMQP)
-	@RabbitListener                 创建一个监听者端点
-	@RabbitHandler                  监听者处理程序
-	@ManagementContextConfiguration Actuator模块
-	@ExportMetricWriter             Actuator模块
-	@ExportMetricReader             Actuator模块
-	@ManagedResource                JMX
-	@ManagedAttribute               JMX
-	@ManagedOperation               JMX
-	
-	@SpringBootTest                 Test,添加@RunWith(SpringRunner.class)	
-	@TestConfiguration              类似@Configuration
-	@TestComponent                  Test
-	@LocalServerPort                用于注入测试用例实际使用的端口
-	@MockBean                       Test
-	@SpyBean                        Test
-	@JsonTest                       测试对象JSON序列化和反序列化是否工作正常
-	@AutoConfigureJsonTesters        Test
-	@WebMvcTest                     检测单个Controller是否工作正常
-	@AutoConfigureMockMvc           注解一个non-@WebMvcTest的类
-	@DataJpaTest                    JPA测试
-	@AutoConfigureTestEntityManager Test
-	@AutoConfigureTestDatabase      真实DB/嵌入DB
-	@RestClientTest                 Test
-	@AutoConfigureRestDocs          Test
-	@Rule                           使用OutputCapture,捕获System.out和System.err输出
-	@TestRestTemplate               Test
+<table border="1" cellspacing="0"><tbody><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><strong>注解</strong></p>
+	</td>
+	<td style="width:32.1pt;">
+	<p style="margin-left:0cm;"><strong>版本</strong></p>
+	</td>
+	<td style="width:191.7pt;">
+	<p style="margin-left:0cm;"><strong>描述</strong></p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@Resource&nbsp;</span></s></p>
+	</td>
+	<td style="width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#333333;">JavaEE5</span></s><s><span style="color:#333333;">规范</span></s></p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@PostConstruct</span></s></p>
+	</td>
+	<td style="width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#333333;">JavaEE5</span></s><s><span style="color:#333333;">规范</span></s></p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@PreDestroy</span></s></p>
+	</td>
+	<td style="width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#333333;">JavaEE5</span></s><s><span style="color:#333333;">规范</span></s></p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Autowired&nbsp;</span></p>
+	</td>
+	<td style="width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Qualifier</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">新改进特性：可以单独在方法中使用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Required</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Scope</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Value</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PropertySource</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">加载属性文件,绑定值,必须使用properties文件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PropertySources</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">PropertySource的集合形式</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Repository&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Service</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Component&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Bean</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">生产bean</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@DependsOn</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">控制依赖bean加载顺序</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Lazy</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Bean懒加载</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Import</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">可导入Configuration、component classes、</p>
+
+	<p style="margin-left:0cm;">ImportSelector、ImportResource</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ImportResource</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">导入XML配置文件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Primary</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">在自动装配时这个bean应该优先当多个候选人资格（相同类型的bean）</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ComponentScan&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">扫描包，可定义@Filter</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Filter</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">扫描包过滤配置</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Configuration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">表明这个是可以声明一个或多个@Bean的配置类</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ActiveProfiles&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">单元测试中指定环境变量</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Profile</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">多环节</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SpringBootApplication&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">表明这是一个spring-boot启动类，等价于@Configuration,@ComponentScan,</p>
+
+	<p style="margin-left:0cm;">@EnableAutoConfiguration</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SpringBootConfiguration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">表明这个类提供了spring-boot启动应用程序</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableAutoConfiguration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">启用自动配置Spring应用程序上下文，它自动根据您的类路径来获取spi（spring.factories）中这些的bean的定义。</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConfigurationProperties</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">绑定属性值,适用于类或方法(第三方组件),支持javax.validation注解校验</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableConfigurationProperties&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启对@ConfigurationProperties注解配置Bean的支持</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConfigurationPropertiesBinding</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">ConfigurationProperties绑定属性时属性转换</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureAfter</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;auto-configuration</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureBefore</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;auto-configuration</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoconfigureOrder</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;auto-configuration</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Conditional&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">该类下面的所有@Bean都会启用配置</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnClass</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">某个class位于类路径上，才会实例化一个Bean</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnMissingClass</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">某个class类路径上不存在的时候，才会实例化一个Bean</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnBean</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Bean条件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnMissingBean&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">反之</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnProperty&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.1.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Property条件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnResource</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Resource条件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnWebApplication&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">WebApplication条件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnNotWebApplication</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">反之</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnExpression&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">SpEL表达式条件</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnJndi</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">基于JNDI的可用性相匹</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnJava</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.1.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">指定JVM版本</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ConditionalOnCloudPlatform</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.5.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">指定的云平台</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableAsync</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">异步任务的启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Async</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">异步任务方法或者异步类</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableScheduling</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">计划任务的启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Scheduled</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">声明这是一个计划任务，方法返回类型为void，支持cron、fixDelay、fixRate</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableWebSocketMessagetBroker</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">webSocket启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@MessageMapping&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">websocket</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableAspectJAutoProxy</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">AOP启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@Aspect</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@PointCut</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@Before</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@After</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@Around</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@AfterReturning</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><s><span style="color:#ed7d31;">@AfterThrowing</span></s></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;"><s>-</s></p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;"><s>aspectj</s></p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableCaching&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">缓存启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Cacheable</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">对其结果进行缓存</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Caching</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">组合多个Cache注解使用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@CacheEvict&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">根据一定的条件对缓存进行清空</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@CachePut&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">和 @Cacheable 不同的是，它每次执行前不会去检查缓存,都会触发真实方法的调用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@CacheConfig&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">类级别的注解,对词重复（方法多次指定cacheNames的）定义的改进</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@Controller&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestMapping&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ControllerAdvice</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">方法将应用于所有控制器，可以结合@ExceptionHandler、@InitBinder、@ModelAttribute使用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RestControllerAdvice</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">为ControllerAdvice和ResponseBody的组合体</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@CookieValue</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SessionAttributes</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SessionAttribute</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">将方法参数绑定到一个会话属性</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@CrossOrigin &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">ajax跨域</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ExceptionHandler</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">处理异常的具体处理程序类和/或处理程序方法</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ResponseStatus</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">标志着一个方法或异常类状态应该返回</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@MatrixVariable</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">矩阵变量绑定参数(Map型参数)</p>
+
+	<p style="margin-left:0cm;">如：/path;name=value;name2=value2</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@InitBinder</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">WebDataBinder用来自动绑定前台参数到mdel中</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ModelAttribute&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestMapping&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestAttribute</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">将方法参数绑定到请求属性</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestParam&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PathVariable&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestBody&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ResponseBody&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestHeader&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RequestPart</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">绑定“multipart/form-data”参数</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@WebAppConfiguration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">@WebAppConfiguration</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableWebMvc&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启Web Mvc支持</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RestController</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">为@Controller和@ResponseBody组合体</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ServletComponentScan</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">注入@WebServlet,@WebFilter,</p>
+
+	<p style="margin-left:0cm;">@WebListener的类</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@GetMapping</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">组合注解,是@RequestMapping(method = RequestMethod.GET)的缩写</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PostMapping</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">同上</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PutMapping </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">同上</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@DeleteMapping&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">同上</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@PatchMapping</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">4.3</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">同上</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@JsonComponent</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">自定义JSON序列化器和反序列化器</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableTransactionManagement</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.1</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">事务启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Transactional</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">略</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@NoRepositoryBean</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableJpaRepositories</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EntityScan</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Entity</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Embeddable</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@MappedSuperclass </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@NodeEntity</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;Neo4j</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableNeo4jRepositories</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;Neo4j</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@SolrDocument</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;Solr</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@Document </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">&nbsp;Elasticsearch</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ManagementContextConfiguration&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Actuator模块</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ExportMetricWriter</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Actuator模块</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ExportMetricReader</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.3.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Actuator模块</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableMBeanExport</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">3.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JMX Mbean启用</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@ManagedResource</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">将<strong>类的所有实例</strong>标识为JMX受控资源</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@ManagedOperation</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">将方法标识为JMX操作</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@ManagedAttribute</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">将getter或者setter标识为部分JMX属性</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@ManagedOperationParameter</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">定义操作参数说明</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@ManagedOperationParameters</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.2</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">定义操作参数说明</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableSpringSecurity</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启spring seccurity支持</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableGlobalMethodSecurity</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">启用'basic'认证</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableAuthorizationServer </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">oauth2 access tokens</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableOAuth2Client</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">安全</p>
+	</td>
+</tr><tr><td style="vertical-align:top;width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@EnableOAuth2Sso</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">安全</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableIntegration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">启用spring-boot-starter-integration基于消息和其他传输协议的抽象,比如HTTP，TCP等</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableJms</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启JMS支持</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@JmsListener</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">创建一个监听者端点,默认是支持事务性的</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@EnableRabbit&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启Rabbit支持(AMQP)</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#70ad47;">@RabbitListener</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">?</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">创建一个监听者端点</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@ContextConfiguration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">2.5</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">集成化测试中定义加载及配置ApplicationContext。</p>
+
+	<p style="margin-left:0cm;">Spring 3.1之前,只有基于路径的资源位置(通常是XML配置文件)的支持，Spring 4.0.4</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SpringBootTest&nbsp;&nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">Test模块，并添加</p>
+
+	<p style="margin-left:0cm;">@RunWith(SpringRunner.class)&nbsp;&nbsp; &nbsp;</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@TestConfiguration</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">类似@Configuration</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@TestComponent</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">类似@Component</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@LocalServerPort </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">用于注入测试用例实际使用的端口</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@MockBean</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">需Mock的bean</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@SpyBean</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">获得代理对象相当于</p>
+
+	<p style="margin-left:0cm;">Mockito.spy(MethodTest.class)</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@JsonTest</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">测试对象JSON序列化和反序列化是否工作正常</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureJsonTesters</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">启用和配置的JSON的自动测试</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@WebMvcTest</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">检测单个Controller是否工作正常</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureMockMvc</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">注解一个non-@WebMvcTest的类</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@DataJpaTest </span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA测试</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureTestEntityManager</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">JPA</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureTestDatabase &nbsp;&nbsp; &nbsp;</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">真实DB/嵌入DB</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@RestClientTest</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">针对rest客户端测试</p>
+	</td>
+</tr><tr><td style="width:169.95pt;">
+	<p style="margin-left:0cm;"><span style="color:#ed7d31;">@AutoConfigureRestDocs</span></p>
+	</td>
+	<td style="vertical-align:top;width:32.1pt;">
+	<p style="margin-left:0cm;">1.4.0</p>
+	</td>
+	<td style="vertical-align:top;width:191.7pt;">
+	<p style="margin-left:0cm;">开启了restdocs生成snippets文件，并指定了存放位置</p>
+	</td>
+</tr></tbody></table>
 
 #### 3.@ConfigurationProperties vs @Value？
-	特性           ConfigurationProperties @Value	
-	Relaxed绑定    Yes                     No
-	Meta-data支持  Yes                     No
-	SpEL表达式     No                      Yes
-	Relaxed绑定：松绑定,Environment属性名和bean属性名不需要精确匹配，如firstName可以表示为：
-	属性                 说明
-	person.firstName     标准驼峰规则
-	person.first-name    虚线表示，推荐用于.properties和.yml文件中
-	person.first_name    下划线表示，用于.properties和.yml文件的可选格式
-	PERSON_FIRST_NAME    大写形式，使用系统环境变量时推荐
-    Meta-data支持：支持spring元数据,满足spring原数据格式http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#configuration-metadata	
+<table border="1" cellpadding="1" cellspacing="1"><tbody><tr><td style="width:186px;">&nbsp;</td>
+			<td style="width:121px;">@ConfigurationProperties</td>
+			<td style="width:542px;">@Value</td>
+		</tr><tr><td style="width:186px;">功能</td>
+			<td style="width:121px;">批量注入配置文件中属性</td>
+			<td style="width:542px;">一个个指定</td>
+		</tr><tr><td style="width:186px;">松散绑定</td>
+			<td style="width:121px;">Yes</td>
+			<td style="width:542px;">No</td>
+		</tr><tr><td style="width:186px;">SpEL表达式</td>
+			<td style="width:121px;">No</td>
+			<td style="width:542px;">Yes</td>
+		</tr><tr><td style="width:186px;">JSR303数据校验</td>
+			<td style="width:121px;">Yes</td>
+			<td style="width:542px;">No</td>
+		</tr><tr><td style="width:186px;"><strong>复杂类型封装</strong></td>
+			<td style="width:121px;">Yes</td>
+			<td style="width:542px;">No</td>
+		</tr><tr><td style="width:186px;"><a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/html/configuration-metadata.html" rel="nofollow" target="_blank">Configuration Metadata</a><br>
+			配置项友好提示</td>
+			<td style="width:121px;">Yes</td>
+			<td style="width:542px;">NO</td>
+		</tr></tbody></table>
+Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要精确匹配。<p/>
+<table>
+<tr><td>属性</td><td>说明</td><tr>
+<tr><td>person.firstName</td><td>标准驼峰规则</td><tr>
+<tr><td>person.first-name</td><td>虚线表示，推荐用于.properties和.yml文件中</td><tr>
+<tr><td>person.first_name</td><td>下划线表示，用于.properties和.yml文件的可选格式</td><tr>
+<tr><td>PERSON_FIRST_NAME </td><td>大写形式，使用系统环境变量时推荐</td><tr>
+</table>
+
 #### 4.@Configuration vs Auto-configuration？
-	@Configuration替代xml来定义BeanDefinition的一种手段。Auto-configuration也是定义BeanDefinition的一种手段。<br/>
-	这两者的相同之处有：<br/>
-	   都是使用@Configuration注解的类，这些类里都可以定义@Bean、@Import、@ImportResource。<br/>
-	   都可以使用@Condition*来根据情况选择是否加载<br/>
-	而不同之处有：<br/>
-       加载方式不同：<br/>
-          普通@Configuration则是通过扫描package path加载的<br/>
-          Auto-configuration的是通过读取classpath*:META-INF/spring.factories中key等于org.springframework.boot.autoconfigure.EnableAutoConfiguration的property列出的@Configuration加载的<br/>
-       加载顺序不同：普通@Configuration的加载永远在Auto-configuration之前<br/>
-       内部加载顺序可控上的不同：<br/>
-         普通@Configuration则无法控制加载顺序<br/>
-         Auto-configuration可以使用@AutoConfigureOrder、@AutoConfigureBefore、@AutoConfigureAfter
-#### 5.常用对象
-	SpringApplication
+@Configuration替代xml来定义BeanDefinition的一种手段。Auto-configuration也是定义BeanDefinition的一种手段，也就是spring spi（META-INF/spring.factories）读取出来的key为org.springframework.boot.autoconfigure.EnableAutoConfiguration的配置类，简称为EnableAutoConfiguration加载。<br/>
+这两者的相同之处有：<br/>
+1.都是使用@Configuration注解的类，这些类里都可以定义@Bean、@Import、@ImportResource。<br/>
+2.都可以使用@Condition*来根据情况选择是否加载<br/>
+而不同之处有：<br/>
+1.加载方式不同：普通@Configuration则是通过扫描package path加载的，Auto-configuration的是通过读取classpath*:META-INF/spring.factories中EnableAutoConfiguration<br/>
+2.加载顺序不同，普通@Configuration的加载永远在Auto-configuration之前<br/>
+3.内部加载顺序可控上的不同：普通@Configuration则无法控制加载顺序，Auto-configuration可以使用@AutoConfigureOrder、@AutoConfigureBefore、@AutoConfigureAfter <br/>
+
+#### 5.常用对象及源码分析系列
+首先如果你对spring3.x或2.x系列源码不太熟悉，spring boot的源码可能对你而言非常难，不过你也大可不必为此而烦恼，本来度源码讲究的就是领悟力，不一定要全部掌握的。<br/>
+	先了解这些吧：<br/>
+	AbstractApplicationContext
 	AnnotationConfigApplicationContext
-	AnnotationConfigEmbeddedWebApplicationContext 
 	AnnotatedBeanDefinitionReader
 	ClassPathBeanDefinitionScanner
-	
-	ApplicationStartedEvent                       启动监听>spring boot在启动过程
-	ApplicationEnvironmentPreparedEvent           监听配置环境事件但此时上下文context还没有创建>....				
-	ApplicationPreparedEvent                      监听上下文创建完成后      
-	ApplicationFailedEvent                        监听启动异常时
-	
-	GenericTypeResolver
-	AnnotationConfigUtils
-	PropertiesLoaderUtils
+	EventPublishingRunListener
+	SimpleApplicationEventMulticaster
+	ApplicationStartedEvent / ApplicationEnvironmentPreparedEvent / ApplicationFailedEvent
+	再看spring boot相关的：
+ 	JarLaucher
+ 	Archive
+	SpringApplication
+	SpringFactoriesLoader
+	ApplicationContextInitializer
+	ConfigurationClassPostProcessor
+	AnnotationConfigServletWebServerApplicationContext
 	.....
-#### 6.原理及源码分析系列
-- [配置源码解析](http://blog.csdn.net/liaokailin/article/details/48864737)<br/>
-	StandardServletEnvironment	<br/>
-	AbstractEnvironment	<br/>
-	MutablePropertySources	<br/>
-	MapPropertySource(动态配置)	<br/>
-- [加载application资源文件源码分析](http://blog.csdn.net/liaokailin/article/details/48878447)<br/>
-	ConfigFileApplicationListener	<br/>
-	PropertySourceLoader	<br/>
-	RandomValuePropertySource	<br/>
-- [Spring boot Bean加载源码分析](http://blog.csdn.net/liaokailin/article/details/49107209)<br/>
-	ConfigurationWarningsApplicationContextInitializer	<br/>
-	ConfigurationWarningsPostProcessor	<br/>
-	PropertySourceOrderingPostProcessor	<br/>
-- [自动配置原理分析](http://blog.csdn.net/liaokailin/article/details/49559951)<br/>
-	EnableAutoConfigurationImportSelector	<br/>
-	AutoConfigurationMetadataLoader		<br/>
-- [嵌入tomcat源码分析](http://blog.csdn.net/liaokailin/article/details/52269786)<br/>
-#### 7.常见jar迁移  
+- [Spring Boot 容器启动原理揭秘](https://blog.csdn.net/alex_xfboy/article/details/88194392)<br/>
+- [spring boot @SpringBootApplication 的工作原理](https://blog.csdn.net/alex_xfboy/article/details/88359955)<br/>
+- [Spring boot 源码分析-Conditional](https://blog.csdn.net/alex_xfboy/article/details/88208069)<br/>
+
+#### 6.常见jar迁移  
 	druid -> 			druid-spring-boot-starter
 	mybatis-spring -> mybatis-spring-boot-starter:MybatisAutoConfiguration(自动注入@Mapper)
 	jedis ->			pring-boot-starter-data-redis
 	com.github.pagehelper:pagehelper
 	.....
-### SpringCloud学习系列  
-#### 1.springCloud常见注解
-	@EnableEurekaServer      eureka-server
-	@EnableDiscoveryClient   eureka-client
-	
-	@EnableCircuitBreaker    Ribbon
-    @LoadBalanced            Ribbon
-	
-	@EnableFeignClients      feign
-	@FeignClient             feign
-	
-	@EnableConfigServer      spring-config
-	@RefreshScope            spring-config
-	
-	@EnableCircuitBreaker    hystrix
-	@EnableHystrix           hystrix(上一个简写)
-	@HystrixCommand          hystrix
-	@EnableTurbine           turbine
-	@EnableTurbineStream     turbine-amqp
-	@EnableHystrixDashboard  hystrix-dashboard
-	
-	@EnableZuulProxy         zuul
-	
-	@InboundChannelAdapter   stream
-	@StreamListener          stream
-	@Poller                  stream
-	@Transformer             stream
-	@Output                  stream
-	@EnableBinding           stream
-	
-	@EnableZipkinServer        sleuth-zipkin
-	@EnableZipkinStreamServer  sleuth-zipkin-stream
-#### 3.常用对象
-	RestTemplate
-#### 4.为什么这个请求有效？http://COMPUTE-SERVICE/add?a=10&b=20   
-	其实是ribbon的@LoadBalanced启作用的
