@@ -57,7 +57,7 @@
 </tr></tbody></table>
 	
 ### 为什么这个请求有效？http://COMPUTE-SERVICE/add?a=10&b=20   
-	其实是ribbon的@LoadBalanced启作用的
+	COMPUTE-SERVICE也不是域名，其实是ribbon的@LoadBalanced启作用的
 	
 ### feign和Hystrix和Ribbon原理及源码
 - [基于spring cloud-feign的异步支持](https://blog.csdn.net/alex_xfboy/article/details/81506076)
