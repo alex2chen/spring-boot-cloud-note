@@ -1,6 +1,6 @@
 Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。它已经成为地球上最热门的技术之一。<p/>
 
-直接看[spring cloud笔记](spring cloud note.md)
+直接看[spring cloud笔记](https://github.com/alex2chen/spring-boot-cloud-note/blob/master/spring%20cloud%20note.md)<br/>
 
 ### 推荐图书
 - Java EE开发的颠覆者 Spring Boot实战
