@@ -1,8 +1,8 @@
 要了解spring cloud，首先你得了解[spring boot](https://github.com/alex2chen/spring-boot-cloud-note/blob/master/readme.md)，如果你不知道可能就比较难以上手了。spring cloud 已成为一套完美微服务解决框架，它提供了一整套服务治理相关的东西，比如：服务注册/发现、断路器、负载均衡、接口网关、接口方式调用、分布式配置中心等。我相信只要往微服务，基本上spring cloud 是绕不开的话题。Dubbo采用的通信机制 RPC，spring cloud采用http的restful api。
 
 ### spring cloud 深入研究领域
+- [Netflix Eureka](https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-eureka-server "服务发现")
 - [api gateway Zuul](https://springcloud.cc/spring-cloud-dalston.html#_router_and_filter_zuul)
-- [Spring Cloud Contract](https://springcloud.cc/spring-cloud-dalston.html#_spring_cloud_contract)
 
 ### 推荐图书
 首先，你要达到入门级的水平，要系统化的学习，这里推荐你看书《Spring Cloud微服务实战》。
