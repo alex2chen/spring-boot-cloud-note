@@ -7,8 +7,7 @@
 ### 推荐图书
 首先，你要达到入门级的水平，要系统化的学习，这里推荐你看书《Spring Cloud微服务实战》。
 
-### spring cloud常见注解
-```html
+### 常见注解
 <table border="1" cellpadding="1" cellspacing="1"><tbody><tr><td style="width:219px;">@EnableEurekaServer</td>
 			<td style="width:630px;">eureka-server</td>
 		</tr><tr><td style="width:219px;">@EnableDiscoveryClient</td>
@@ -56,6 +55,5 @@
 		</tr><tr><td style="width:219px;">@EnableZipkinStreamServer</td>
 			<td style="width:630px;">sleuth-zipkin-stream</td>
 		</tr></tbody></table>
-```
 
 最后，由于spring cloud组件使用的非常多，短时间内基本上很难达到高阶水平，后续会根据使用的情况专门分享。
