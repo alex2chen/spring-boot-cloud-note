@@ -9,51 +9,55 @@
 
 ### 常见注解
 <table border="1" cellpadding="1" cellspacing="1"><tbody><tr><td style="width:219px;">@EnableEurekaServer</td>
-			<td style="width:630px;">eureka-server</td>
-		</tr><tr><td style="width:219px;">@EnableDiscoveryClient</td>
-			<td style="width:630px;">eureka-client</td>
-		</tr><tr><td style="width:219px;">@RibbonClient</td>
-			<td style="width:630px;">Ribbon</td>
-		</tr><tr><td style="width:219px;">@LoadBalanced</td>
-			<td style="width:630px;">Ribbon</td>
-		</tr><tr><td style="width:219px;">@EnableFeignClients</td>
-			<td style="width:630px;">feign</td>
-		</tr><tr><td style="width:219px;">@FeignClient</td>
-			<td style="width:630px;">feign</td>
-		</tr><tr><td style="width:219px;">@EnableConfigServer</td>
-			<td style="width:630px;">spring-config</td>
-		</tr><tr><td style="width:219px;">@RefreshScope&nbsp;</td>
-			<td style="width:630px;">spring-config</td>
-		</tr><tr><td style="width:219px;">@EnableCircuitBreaker</td>
-			<td style="width:630px;">hystrix</td>
-		</tr><tr><td style="width:219px;">@EnableHystrix</td>
-			<td style="width:630px;">hystrix（继承@EnableCircuitBreaker）</td>
-		</tr><tr><td style="width:219px;">@HystrixCommand</td>
-			<td style="width:630px;">hystrix</td>
-		</tr><tr><td style="width:219px;">@EnableTurbine</td>
-			<td style="width:630px;">turbine</td>
-		</tr><tr><td style="width:219px;">@EnableTurbineStream</td>
-			<td style="width:630px;">turbine-amqp</td>
-		</tr><tr><td style="width:219px;">@EnableHystrixDashboard</td>
-			<td style="width:630px;">hystrix-dashboard</td>
-		</tr><tr><td style="width:219px;">@EnableZuulProxy</td>
-			<td style="width:630px;">zuul</td>
-		</tr><tr><td style="width:219px;">@InboundChannelAdapter</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@StreamListener&nbsp;</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@Poller</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@Transformer</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@Output</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@EnableBinding</td>
-			<td style="width:630px;">stream</td>
-		</tr><tr><td style="width:219px;">@EnableZipkinServer</td>
-			<td style="width:630px;">sleuth-zipkin</td>
-		</tr><tr><td style="width:219px;">@EnableZipkinStreamServer</td>
-			<td style="width:630px;">sleuth-zipkin-stream</td>
-		</tr></tbody></table>
+	<td style="width:630px;">eureka-server</td>
+</tr><tr><td style="width:219px;">@EnableDiscoveryClient</td>
+	<td style="width:630px;">eureka-client</td>
+</tr><tr><td style="width:219px;">@RibbonClient</td>
+	<td style="width:630px;">Ribbon</td>
+</tr><tr><td style="width:219px;">@LoadBalanced</td>
+	<td style="width:630px;">Ribbon</td>
+</tr><tr><td style="width:219px;">@EnableFeignClients</td>
+	<td style="width:630px;">feign</td>
+</tr><tr><td style="width:219px;">@FeignClient</td>
+	<td style="width:630px;">feign</td>
+</tr><tr><td style="width:219px;">@EnableConfigServer</td>
+	<td style="width:630px;">spring-config</td>
+</tr><tr><td style="width:219px;">@RefreshScope&nbsp;</td>
+	<td style="width:630px;">spring-config</td>
+</tr><tr><td style="width:219px;">@EnableCircuitBreaker</td>
+	<td style="width:630px;">hystrix</td>
+</tr><tr><td style="width:219px;">@EnableHystrix</td>
+	<td style="width:630px;">hystrix（继承@EnableCircuitBreaker）</td>
+</tr><tr><td style="width:219px;">@HystrixCommand</td>
+	<td style="width:630px;">hystrix</td>
+</tr><tr><td style="width:219px;">@EnableTurbine</td>
+	<td style="width:630px;">turbine</td>
+</tr><tr><td style="width:219px;">@EnableTurbineStream</td>
+	<td style="width:630px;">turbine-amqp</td>
+</tr><tr><td style="width:219px;">@EnableHystrixDashboard</td>
+	<td style="width:630px;">hystrix-dashboard</td>
+</tr><tr><td style="width:219px;">@EnableZuulProxy</td>
+	<td style="width:630px;">zuul</td>
+</tr><tr><td style="width:219px;">@InboundChannelAdapter</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@StreamListener&nbsp;</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@Poller</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@Transformer</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@Output</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@EnableBinding</td>
+	<td style="width:630px;">stream</td>
+</tr><tr><td style="width:219px;">@EnableZipkinServer</td>
+	<td style="width:630px;">sleuth-zipkin</td>
+</tr><tr><td style="width:219px;">@EnableZipkinStreamServer</td>
+	<td style="width:630px;">sleuth-zipkin-stream</td>
+</tr></tbody></table>
+#### 常用对象
+	RestTemplate
+#### 为什么这个请求有效？http://COMPUTE-SERVICE/add?a=10&b=20   
+	其实是ribbon的@LoadBalanced启作用的
 
 最后，由于spring cloud组件使用的非常多，短时间内基本上很难达到高阶水平，后续会根据使用的情况专门分享。
