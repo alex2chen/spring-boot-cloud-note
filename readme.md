@@ -693,9 +693,7 @@ application.yml 可以用来定义应用级别的，如果搭配spring-cloud-con
 	3.2
 	</td>
 	<td>
-	矩阵变量绑定参数(Map型参数)
-
-	如：/path;name=value;name2=value2
+	矩阵变量绑定参数(Map型参数)如：/path;name=value;name2=value2
 	</td>
 </tr><tr><td>
 	@InitBinder
@@ -821,9 +819,7 @@ application.yml 可以用来定义应用级别的，如果搭配spring-cloud-con
 	1.3.0
 	</td>
 	<td>
-	注入@WebServlet,@WebFilter,
-
-	@WebListener的类
+	注入@WebServlet,@WebFilter,@WebListener的类
 	</td>
 </tr><tr><td>
 	@GetMapping
