@@ -55,6 +55,7 @@
 </tr><tr><td style="width:219px;">@EnableZipkinStreamServer</td>
 	<td style="width:630px;">sleuth-zipkin-stream</td>
 </tr></tbody></table>
+
 #### 常用对象
 	RestTemplate
 #### 为什么这个请求有效？http://COMPUTE-SERVICE/add?a=10&b=20   
