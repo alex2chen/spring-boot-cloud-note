@@ -1346,7 +1346,7 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 
 #### 5.常用对象及源码分析系列
 首先如果你对spring3.x或2.x系列源码不太熟悉，spring boot的源码可能对你而言非常难，不过你也大可不必为此而烦恼，本来度源码讲究的就是领悟力，不一定要全部掌握的。<br/>
-	先了解这些吧：<br/>
+
 	AbstractApplicationContext
 	AnnotationConfigApplicationContext
 	AnnotatedBeanDefinitionReader
@@ -1354,18 +1354,19 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 	EventPublishingRunListener
 	SimpleApplicationEventMulticaster
 	ApplicationStartedEvent / ApplicationEnvironmentPreparedEvent / ApplicationFailedEvent
-	再看spring boot相关的：
- 	JarLaucher
- 	Archive
+ 	JarLaucher（spring boot的从这向下关注）
+ 	Archive
 	SpringApplication
 	SpringFactoriesLoader
 	ApplicationContextInitializer
 	ConfigurationClassPostProcessor
 	AnnotationConfigServletWebServerApplicationContext
 	.....
+	
 - [Spring Boot 容器启动原理揭秘](https://blog.csdn.net/alex_xfboy/article/details/88194392)<br/>
 - [spring boot @SpringBootApplication 的工作原理](https://blog.csdn.net/alex_xfboy/article/details/88359955)<br/>
 - [Spring boot 源码分析-Conditional](https://blog.csdn.net/alex_xfboy/article/details/88208069)<br/>
+
 #### 6.常见jar迁移  
 	druid -> 			druid-spring-boot-starter
 	mybatis-spring -> mybatis-spring-boot-starter:MybatisAutoConfiguration(自动注入@Mapper)
@@ -1373,7 +1374,7 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 	com.github.pagehelper:pagehelper
 	.....
 #### 7.配置属性系列
-8. 配置属性系列[查看](https://blog.csdn.net/alex_xfboy/article/details/76685476#8.%20%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E7%B3%BB%E5%88%97)<br/>
+配置属性系列[查看](https://blog.csdn.net/alex_xfboy/article/details/76685476#8.%20%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E7%B3%BB%E5%88%97)<br/>
 - 8.1 server
 - 8.1.1 server
 - 8.1.2 cookie / session
