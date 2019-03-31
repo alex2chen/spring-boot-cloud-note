@@ -1396,10 +1396,56 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 - [Spring Boot 容器启动原理揭秘](https://blog.csdn.net/alex_xfboy/article/details/88194392)<br/>
 - [spring boot @SpringBootApplication 的工作原理](https://blog.csdn.net/alex_xfboy/article/details/88359955)<br/>
 - [Spring boot 源码分析-Conditional](https://blog.csdn.net/alex_xfboy/article/details/88208069)<br/>
-
 #### 6.常见jar迁移  
 	druid -> 			druid-spring-boot-starter
 	mybatis-spring -> mybatis-spring-boot-starter:MybatisAutoConfiguration(自动注入@Mapper)
 	jedis ->			pring-boot-starter-data-redis
 	com.github.pagehelper:pagehelper
 	.....
+#### 7.配置属性系列
+8. 配置属性系列[查看](https://blog.csdn.net/alex_xfboy/article/details/76685476#8.%20%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E7%B3%BB%E5%88%97)<br/>
+- 8.1 server
+- 8.1.1 server
+- 8.1.2 cookie / session
+- 8.1.3 tomcat
+- 8.1.4 undertow
+- 8.1.3 ssl
+- 8.2 MVC
+- 8.2.1 MVC
+- 8.2.2 http
+- 8.2.3 view
+- 8.2.4 multipart
+- 8.2.5 json
+- 8.2.6 resource
+- 8.2.7 messages
+- 8.2.8 freemarker
+- 8.2.9 velocity
+- 8.2.10 thymeleaf
+- 8.2.11 mustcache
+- 8.2.12 jersey
+- 8.2.13 mobile
+- 8.2.14 groovy
+- 8.3 datasource
+- 8.3.1 datasource
+- 8.3.2 JPA
+- 8.3.3 jooq
+- 8.3.4 h2
+- 8.3.4 JTA
+- 8.4 cache
+- 8.5 redis
+- 8.6 mongodb
+- 8.7 springdata
+- 8.8 mq
+- 8.8.1 rabbitmq
+- 8.8.2 activemq
+- 8.8.3 jms
+- 8.9 spring security
+- 8.10 其他
+- 8.10.1 aop
+- 8.10.2 application
+- 8.10.3 autoconfig
+- 8.10.4 batch
+- 8.10.5 jmx
+- 8.10.6 mail
+- 8.10.7 sendgrid
+- 8.10.8 social
