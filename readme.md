@@ -5,6 +5,7 @@ Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来�
 ### 推荐图书
 - Java EE开发的颠覆者 Spring Boot实战
 - Spring Boot参考指南
+- [Spring Boot Reference Guide](https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/htmlsingle/#boot-features-custom-starter-naming)
 
 #### 1.application.yml和bootstrap.yml区别？
 bootstrap.yml可以理解成系统级别的一些参数配置，这些参数一般是不会变动的<br/>
