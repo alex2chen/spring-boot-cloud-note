@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <jmxConfigurator/>
+   <property name="output.main" value="INFO"/>
+    <property name="output.other" value="DEBUG"/>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+        </encoder>
+        <target>System.out</target>
+    </appender>
+    <root level="${output.main}">
+        <appender-ref ref="Console"/>
+    </root>
+    <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="OFF"/>
+    <logger name="org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader" level="OFF"/>
+    <logger name="org.springframework.core.io.support.PathMatchingResourcePatternResolver" level="OFF"/>
+    <logger name="com.kxtx" level="${output.other}"/>
+    <!--<logger name="druid.sql.Statement" level="${output.other}"/>-->
+    <!--<logger name="org.apache.ibatis" level="${output.other}"/>-->
+    <logger name="java.sql" level="${output.other}"/>
+    <!--<logger name="com.mysql" level="${output.other}"/>-->
+
+
+</configuration>
