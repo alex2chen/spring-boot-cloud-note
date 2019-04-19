@@ -5,6 +5,7 @@ Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来�
 ### 推荐图书
 - Java EE开发的颠覆者 Spring Boot实战
 - Spring Boot参考指南
+- [Spring Boot Reference Guide](https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/htmlsingle/#boot-features-custom-starter-naming)
 
 #### 1.application.yml和bootstrap.yml区别？
 bootstrap.yml可以理解成系统级别的一些参数配置，这些参数一般是不会变动的<br/>
@@ -1367,13 +1368,7 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 - [spring boot @SpringBootApplication 的工作原理](https://blog.csdn.net/alex_xfboy/article/details/88359955)<br/>
 - [Spring boot 源码分析-Conditional](https://blog.csdn.net/alex_xfboy/article/details/88208069)<br/>
 
-#### 6.常见jar迁移  
-	druid -> 			druid-spring-boot-starter
-	mybatis-spring -> mybatis-spring-boot-starter:MybatisAutoConfiguration(自动注入@Mapper)
-	jedis ->			pring-boot-starter-data-redis
-	com.github.pagehelper:pagehelper
-	.....
-#### 7.配置属性系列
+#### 6.配置属性系列
 配置属性系列[查看](https://blog.csdn.net/alex_xfboy/article/details/76685476#8.%20%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E7%B3%BB%E5%88%97)<br/>
 - 8.1 server
 - 8.1.1 server
