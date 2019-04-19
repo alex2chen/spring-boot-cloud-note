@@ -1367,13 +1367,7 @@ Relaxed（松散绑定）绑定，Environment属性名和bean属性名不需要�
 - [spring boot @SpringBootApplication 的工作原理](https://blog.csdn.net/alex_xfboy/article/details/88359955)<br/>
 - [Spring boot 源码分析-Conditional](https://blog.csdn.net/alex_xfboy/article/details/88208069)<br/>
 
-#### 6.常见jar迁移  
-	druid -> 			druid-spring-boot-starter
-	mybatis-spring -> mybatis-spring-boot-starter:MybatisAutoConfiguration(自动注入@Mapper)
-	jedis ->			pring-boot-starter-data-redis
-	com.github.pagehelper:pagehelper
-	.....
-#### 7.配置属性系列
+#### 6.配置属性系列
 配置属性系列[查看](https://blog.csdn.net/alex_xfboy/article/details/76685476#8.%20%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E7%B3%BB%E5%88%97)<br/>
 - 8.1 server
 - 8.1.1 server
