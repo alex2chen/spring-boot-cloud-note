@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: server1
+security:
+  basic:
+    enabled: true
+  user:
+    name: alex
+    password: 123456
+---
+server:
+  port: 8762
+spring:
+  profiles: server1
+  application:
+    name: Eureka-Server1
+eureka:
+  #  instance:
+  #    hostname: peer1
+  client:
+    register-with-eureka: false # false表示不向注册中心注册自己
+    fetch-registry: false  # false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8761/eureka/
+  server:
+    enable-self-preservation: false
+---
+server:
+  port: 8761
+spring:
+  profiles: server2
+  application:
+    name: Eureka-Server2
+eureka:
+  #  instance:
+  #    hostname: peer2
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8762/eureka/
+  server:
+    enable-self-preservation: false

@@ -1,0 +1,12 @@
+server:
+  port: 8082
+  
+spring:
+  application:
+    name: Server-Consumer
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8761/eureka/,http://alex:123456@localhost:8762/eureka/
+
