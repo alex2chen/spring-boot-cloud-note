@@ -7,6 +7,9 @@
 ### 推荐图书
 首先，你要达到入门级的水平，要系统化的学习，这里推荐你看书《Spring Cloud微服务实战》。
 
+### 技术图谱
+![spring-cloud](ext/spring cloud skill.jpg "spring-cloud")
+
 ### 常见注解
 <table><tbody><tr><td>@EnableEurekaServer</td>
 	<td>eureka-server</td>
