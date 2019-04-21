@@ -1,0 +1,29 @@
+server:
+  port: 9091
+security:
+  user:
+    name: alex
+    password: 123456
+
+spring:
+  application:
+    name: config-server-bus
+  cloud:
+    config:
+      server:
+        git:
+          uri: xxx
+          username: xxx
+          password: xxx
+          search-paths: '{application}'
+          clone-on-start: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8761/eureka/,http://alex:123456@localhost:8762/eureka/

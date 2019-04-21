@@ -1,0 +1,28 @@
+server:
+  port: 9092
+management:
+  security:
+    enabled: false
+spring:
+  application:
+    name: oms
+  cloud:
+    config:
+      profile: dev
+      label: master
+      uri: http://localhost:9091
+      username: alex
+      password: 123456
+      discovery:
+        enabled: true
+        service-id: config-server-bus
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8761/eureka/,http://alex:123456@localhost:8762/eureka/

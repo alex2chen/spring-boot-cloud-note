@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Zuul-Gateway
+server:
+  port: 9095
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://alex:123456@localhost:8761/eureka/,http://alex:123456@localhost:8762/eureka/
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      url: http://localhost:8082
+    api-b:
+#      path: /api-b/user/1
+      path: /api-b/**
+      serviceId: server-provider
+    api-c:
+      path: /api-c/**
+      serviceId: server-consumer
+    api-d:
+      path: /api-d/**
+      url: forward:/test
+  ignored-services: server-consumer
+  sensitive-headers:
+  add-host-header: true
