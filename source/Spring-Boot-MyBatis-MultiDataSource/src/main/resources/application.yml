@@ -1,0 +1,33 @@
+# 主数据库
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      main:
+        initial-size: 50
+        max-active: 200
+        url: jdbc:mysql://localhost:3306/test
+        username: root
+        password: 123456
+        filter:
+          stat:
+            enabled: true
+          config:
+            enabled: true
+          encoding:
+            enabled: true
+          wall:
+            enabled: true
+      ds1:
+        url: jdbc:mysql://localhost:3306/test1
+        username: root
+        password: 123456
+      ds2:
+        url: jdbc:mysql://localhost:3306/test2
+        username: root
+        password: 123456
+mybatis:
+#  config-location:classpath:config/mybatis-config.xml
+  mapperLocations: classpath:com/github/mapper/*.xml
+  typeAliasesPackage: com.github.springkit.mapper
+  check-config-location: false

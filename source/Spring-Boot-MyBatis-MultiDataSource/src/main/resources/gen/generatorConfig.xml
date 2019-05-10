@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 使用 mvn mybatis-generator:generate -->
+<generatorConfiguration>
+    <!-- 配置文件 -->
+    <properties resource="gen/db.properties"/>
+    <context id="gcldTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- plugin -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!-- 取消生成的代码注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 连接配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${datasource.url}" userId="${datasource.db.username}"
+                        password="${datasource.db.password}">
+        </jdbcConnection>
+
+        <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
+        <javaModelGenerator targetPackage="${model.package}"
+                            targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成Mapper 配置文件 -->
+        <sqlMapGenerator targetPackage="${xml.path}"
+                         targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <!-- javaClientGenerator是应用接口的生成信息 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${mapper.package}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- oracle 使用 schema 对应 用户名称空间 mysql 使用 catalog 对应 数据库 -->
+        <!--<table tableName="%" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableUpdateByExample="false"-->
+               <!--selectByExampleQueryId="false" enableSelectByExample="false">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="Student">
+        </table>
+
+
+    </context>
+</generatorConfiguration>
