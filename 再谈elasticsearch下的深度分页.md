@@ -28,7 +28,7 @@ Elasticsearch 在业务系统中使用也越来越广，一些开发规范也需
 
 在es中， 搜索一般包括query 和 fetch 阶段 两个阶段，关于es默认的搜索类型为 `QUERY_THEN_FETCH` 
 
-> [之前也有分享过](https://blog.csdn.net/alex_xfboy/article/details/101030963 )
+> [之前也有分享过](https://blog.csdn.net/alex_xfboy/article/details/101030963)
 >
 >  query  过程：首先 *Client 发送一次搜索请求，node1 接收到请求，然后，node1 创建一个大小为 from + size 的优先级队列用来存结果，我们管 node1 叫 coordinating node* ；然后 *coordinating node将请求广播到涉及到的 shards，每个 shard 在内部执行搜索请求，然后，将结果存到内部的大小同样为 from + size 的优先级队列里，可以把优先级队列理解为一个包含 top N 结果的列表*； *每个 shard 把暂存在自身优先级队列里的数据返回给 coordinating node，coordinating node 拿到各个 shards 返回的结果后对结果进行一次合并，产生一个全局的优先级队列，存到自身的优先级队列里。* 
 >
