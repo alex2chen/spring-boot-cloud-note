@@ -4,11 +4,11 @@
 
 spring的元数据接口是`ClassMetadata`，而对于一般开发者使用的就是`AnnotationMetadata`和`MethodsMetadata`
 
-![](ext/ClassMetadata.jpg)
+![](ext/ClassMetadata.jpg?raw=true)
 
 **`AnnotationMetadata`的实现类图**
 
-![](ext/AnnotationMetadata.jpg)
+![](ext/AnnotationMetadata.jpg?raw=true)
 
 <font color=#969896>注：本文基于spring-boot-starter-parent 2.1.3.RELEASE（Spring 5.1.5.RELEASE）</font>
 
@@ -99,7 +99,7 @@ final class SimpleMetadataReader implements MetadataReader {
 
 并提供了工厂类接口`MetadataReaderFactory`，实现也比较多：`CachingMetadataReaderFactory`
 
-![](ext/MetadataReaderFactory.jpg)
+![](ext/MetadataReaderFactory.jpg?raw=true)
 
 **使用场景**
 
