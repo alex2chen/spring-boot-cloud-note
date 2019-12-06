@@ -1,4 +1,4 @@
-​	Spring Boot有很多功能特性值得借鉴和学习，很多玩Spring Boot的人知道不需要安装Tomcat很方便，其实并没有发现Maven也是不需要提前安装。它这样做的好处在于解决了开发环境maven版本不一致导致的各种问题，spring boot中集成了maven-wrapper的确比较务实。
+	Spring Boot有很多功能特性值得借鉴和学习，很多玩Spring Boot的人知道不需要安装Tomcat很方便，其实并没有发现Maven也是不需要提前安装。它这样做的好处在于解决了开发环境maven版本不一致导致的各种问题，spring boot中集成了maven-wrapper的确比较务实。
 
 [TOC]
 
@@ -6,16 +6,18 @@
 
 相信大家都用到spring的脚手架：https://start.spring.io/ 来生成Spring Boot项目，而项目的根目录中会多几个文件：
 
-> cmd > C:\Users\alex\Desktop\demo> tree /f
-> │  mvnw            //linux-shell
-> │  mvnw.cmd        //window-cmd
-> │  pom.xml
-> ├─.mvn
-> │  └─wrapper
-> │          maven-wrapper.jar
-> │          maven-wrapper.properties
-> │          MavenWrapperDownloader.java
-> ├─src
+```html
+cmd > C:\Users\alex\Desktop\demo> tree /f
+│  mvnw            //linux-shell
+│  mvnw.cmd        //window-cmd
+│  pom.xml
+├─.mvn
+│  └─wrapper
+│          maven-wrapper.jar
+│          maven-wrapper.properties
+│          MavenWrapperDownloader.java
+├─src
+```
 
 maven-wrapper解决了2个问题：
 
@@ -151,7 +153,7 @@ public class MavenWrapperDownloader {
 
 maven-wrapper-support的逻辑也不复杂：会监测项目下的.mvn/wrapper/maven-wrapper.properties中的distributionUrl属性值，且自动下载maven版本到用户目录.m2/wrapper目录中，并且改变setting->build->build Tools ->maven-> maven home directory的值，但执行的命令是原生mvn的命令，而不是项目中下的mvnw命令。
 
-![maven-wrapper-support](ext/maven-wrapper-support.png?raw=true)
+![maven-wrapper-support](ext/maven-wrapper-support.jpg?raw=true)
 
 原理：具体验证可查看plugin安装目录一般为：idea.config.path=${user.home}/.IntelliJIdea/config，比如我的：C:\Users\alex\.IntelliJIdea2018.3\config\plugins\maven-wrapper-support\lib中的maven-wrapper-support-0.5.1.jar代码<font color=86ca5e>MavenWrapperProjectComponent.class</font>。
 
