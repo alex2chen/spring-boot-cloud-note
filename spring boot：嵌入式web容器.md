@@ -1,6 +1,4 @@
-在互联网场景中，与终端用户交互的应用大多数是Web应用，其通信协议基本上是HTTP。而java圈中的选择无非就是Servlet和其他，前者几乎是垄断了java web开发，Tomcat 和Jetty作为Servlet的经典实现，后来者Undertow作为JBoss社区推出基于3.1+的新一代嵌入式容器。
-
-嵌入式容器其实也并非spring boot的专属，早在Tomcat 5.x和Jetty 5.x就已经支持嵌入式容器。
+在互联网场景中，与终端用户交互的应用大多数是Web应用，其通信协议基本上是HTTP。而java圈中的选择无非就是Servlet和其他，前者几乎是垄断了java web开发，Tomcat 和Jetty作为Servlet的经典实现，后来者Undertow作为JBoss社区推出基于3.1+的新一代嵌入式容器。嵌入式容器其实也并非spring boot的专属，早在Tomcat 5.x和Jetty 5.x就已经支持嵌入式容器。
 
 关于嵌入式容器，官方介绍是这样的：
 
@@ -29,10 +27,10 @@ Spring Boot 1.x 兼容 Servlet 和 Java 的版本更低一些，即 Servlet 3.0+
 
 - 29.4. [Embedded Servlet Container Support](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
 - 29.4.1. [Servlets, Filters, and listeners](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
-- 29.4.2. Servlet Context Initialization
-- 29.4.3. The ServletWebServerApplicationContext
-- 29.4.4. Customizing Embedded Servlet Containers
-- 29.4.5. JSP Limitations
+- 29.4.2. [Servlet Context Initialization](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
+- 29.4.3. [The ServletWebServerApplicationContext](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
+- 29.4.4. [Customizing Embedded Servlet Containers](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
+- 29.4.5. [JSP Limitations](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-embedded-container)
 
 #### Tomcat
 
@@ -107,7 +105,7 @@ tomcat定义的FAT JAR、FAT WAR的特点：
 >        jar cvfm classes.jar mymanifest -C foo/ .
 > ```
 
-针对上面2点特性，spring boot的做法是：
+针对上面两点特性，spring boot的做法是：
 
 1. 在Spring Boot 1.x有一定的局限性，但在spring boot2.0中利用嵌入式Tomcat API构建`TomcatWebServer` Bean，由spring 应用上下文将其引导（嵌入tomcat的各个组件【context、connector等】以及classloader的装载）。
 2. 不考虑压缩模式，使用`spring-boot-loader`内建JAR协议`URLStreamHandle`来加载其内部的资源
@@ -117,16 +115,129 @@ tomcat定义的FAT JAR、FAT WAR的特点：
 
 #### Jetty
 
-Google选择用Jetty取代Tomcat，有其必然性。归根到底是当时还没有spring boot，当时更看重Jetty的大小和灵活性（可插拔和可拓展行强，可以更大限度的进行定制）。
+Jetty是eclipse组织开源，目标是做为其他程序的嵌入式web服务器组件，低耦合，可插拔，特点是短小精悍，极易嵌入。
 
+Google主推Jetty取代Tomcat，有其必然性。归根到底是当时还没有spring boot，当时更看重Jetty的大小和易用性（可插拔和可拓展行强，可以更大限度的进行定制），可参与[InfoQ观点](https://www.infoq.com/news/2009/08/google-chose-jetty/)。
 
+它也提供了`jetty-maven-plugin`（[更多](https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html)），同时API更友好，内嵌完全不是问题。
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+```
+
+如果你敢兴趣更多Embedding Jetty的用法，可参与官方介绍：
+
+- [Creating the Server](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_creating_the_server)
+- [Using Handlers](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_using_handlers)
+- [Embedding Connectors](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_embedding_connectors)
+- [Embedding Servlets](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_embedding_servlets)
+- [Embedding Contexts](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_embedding_contexts)
+- [Embedding ServletContexts](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_embedding_servletcontexts)
+- [Embedding Web Applications](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_embedding_web_applications)
+- [Like Jetty XML](https://www.eclipse.org/jetty/documentation/current/embedding-jetty.html#_like_jetty_xml)
+- [Jetty Embedded HelloWorld](https://www.eclipse.org/jetty/documentation/current/advanced-embedding.html#jetty-helloworld)
 
 #### Undertow
 
-x
+[Undertow](http://undertow.io/)是红帽公司的开源产品，**基于 NIO 的高性能 Web 嵌入式服务器**，是Wildfly默认的Web服务器。红帽公司出品，必属精品，你可能更熟悉的它家另两款：[Vert.x](https://vertx.io/) 、 [Netty](https://netty.io/)。
+
+关于undertow的更多介绍，可参与[官方1.3文档](http://undertow.io/undertow-docs/undertow-docs-1.3.0/index.html)
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-undertow</artifactId>
+    </dependency>
+</dependencies>
+```
 
 #### Embedded Reactive Server
 
-[I think you ~~like~~](https://docs.spring.io/spring-boot/docs/2.1.10.RELEASE/reference/html/boot-features-developing-web-applications.html#boot-features-reactive-server)
+响应性编程的技术要求是异步（servlet3.1才支持）和被压、事件消息。Spring Boot包括对以下嵌入式响应式web服务器的支持：Reactor Netty、Tomcat、Jetty和Undertow。大多数开发人员使用适当的“Starter”来获得完全配置的实例。默认情况下，嵌入式服务器侦听端口8080上的HTTP请求。
 
-https://zhuanlan.zhihu.com/p/30813274
+| Server name           | Server API used                                              | Reactive Streams support                                     |
+| :-------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| Netty                 | Netty API                                                    | [Reactor Netty](https://github.com/reactor/reactor-netty)    |
+| Undertow              | Undertow API                                                 | spring-web: Undertow to Reactive Streams bridge              |
+| Tomcat                | Servlet 3.1 non-blocking I/O; Tomcat API to read and write ByteBuffers vs byte[] | spring-web: Servlet 3.1 non-blocking I/O to Reactive Streams bridge |
+| Jetty                 | Servlet 3.1 non-blocking I/O; Jetty API to write ByteBuffers vs byte[] | spring-web: Servlet 3.1 non-blocking I/O to Reactive Streams bridge |
+| Servlet 3.1 container | Servlet 3.1 non-blocking I/O                                 | spring-web: Servlet 3.1 non-blocking I/O to Reactive Streams bridge |
+
+| Server name   | Group id                | Artifact name               |
+| :------------ | :---------------------- | :-------------------------- |
+| Reactor Netty | io.projectreactor.netty | reactor-netty               |
+| Undertow      | io.undertow             | undertow-core               |
+| Tomcat        | org.apache.tomcat.embed | tomcat-embed-core           |
+| Jetty         | org.eclipse.jetty       | jetty-server, jetty-servlet |
+
+当自动配置Reactor Netty或Jetty服务器时，Spring Boot将创建特定的bean，为服务器实例提供HTTP资源：`ReactorResourceFactory`和`JettyResourceFactory`
+
+比如使用jetty作为Reactive Server时，需注释`spring-boot-starter-web`否则会影响`WebApplicationType`会判断为`SERVLET`而不是`REACTIVE`，可在`SpringApplication`的构造函数中。
+
+```xml
+<!--<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>-->
+<dependency>
+     <groupId>org.springframework.boot</groupId>
+     <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+```
+
+hello world走起
+
+```java
+@Bean
+public RouterFunction<ServerResponse> helloWorld() {
+    return route(GET("/hello-world"),
+            request -> ok().body(Mono.just("Hello World"), String.class)
+    );
+}
+@Bean
+public ApplicationRunner runner(ServletWebServerApplicationContext beanFactory) {
+    return args -> {
+        System.out.println("helloWorld Bean："+ beanFactory.getBean("helloWorld").getClass().getName());
+    };
+}
+@EventListener(WebServerInitializedEvent.class)
+public void onWebServerReady(WebServerInitializedEvent event) {
+    System.out.println("WebServer已启动," + event.getWebServer().getClass().getName());
+}
+```
+
+`ServletWebServerApplicationContext`
+
+关于`ServletWebServerApplicationContext`，它继承于`ApplicationContext`，类图如下：
+
+![ServletWebServerApplicationContext](ext/ServletWebServerApplicationContext.jpg?raw=true)
+
+`WebServerInitializedEvent`是spring boot 2.0中新增的事情，使用的功能等价于`ApplicationRunner`。
