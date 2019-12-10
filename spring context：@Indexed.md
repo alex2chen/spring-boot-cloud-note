@@ -10,7 +10,7 @@ spring5.0开始支持`@Indexed`来提升进应用启动速度，通过Annotation
 
 默认支持标记为`Component`及其派生注解（`Controller`、`Repository`、`Service`、`Configuration`等）的类，当然也可以是非spring bean（`@Indexed`修饰的类）。
 
-<font color=#ff0000>注：如果已经是spring bean（`Component`修饰的类）了就没必要再标记`@Indexed`，否则索引文件会再追加一个相同的，感觉这是个bug</font>
+<font color=#ff0000>注：如果已经是spring bean（`Component`修饰的类，并且`Component`已经被标记为`@Indexed`）了就没必要再标记`@Indexed`，否则索引文件会再追加一个相同的，感觉这是个bug</font>
 
 **如何使用？**
 
