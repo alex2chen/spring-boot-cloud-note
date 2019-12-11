@@ -38,7 +38,7 @@ public void metaTest() {
 	@Child
 ```
 
-也就是说，有层次结构的注解，spring就认定时派生类（extends），并且派生性强调的类型。
+也就是说，有层次结构的注解，spring就认定是具备派生性（extends），并且派生性强调的类型（Child extends Parent）。
 
 **Component**
 
@@ -54,7 +54,7 @@ public void metaTest() {
 @Documented
 @Component
 public @interface HignLevelAnnotation {
-    String value() default "";
+    String value() default "a";
 }
 @HignLevelAnnotation
 public class TestComponent {//此时可以自动注入到spring ioc中
@@ -64,7 +64,7 @@ public class TestComponent {//此时可以自动注入到spring ioc中
 @Documented
 @HignLevelAnnotation
 public @interface MiddleLevelAnnotation {
-    String value() default "";
+    String value() default "b";
 }
 @MiddleLevelAnnotation
 public class TestComponent {//此时还可以自动注入到spring ioc中
@@ -77,6 +77,11 @@ public void metaTest() throws IOException {
     AnnotationMetadata asmVisitor = readerFactory.getMetadataReader(resource).getAnnotationMetadata();
     //AnnotationMetadataReadingVisitor#attributesMap内部存储了注解记录
     System.out.println(((AnnotationMetadataReadingVisitor)asmVisitor).isAnnotated("org.springframework.stereotype.Component"));
+    //上面的Asm可能难懂，那下面反射的更易懂
+    Component cp = AnnotationUtils.findAnnotation(TestComponent.class, Component.class);
+    System.out.println(cp.value());
+    HignLevelAnnotation cp2 = AnnotationUtils.findAnnotation(TestComponent.class, HignLevelAnnotation.class);
+    System.out.println(cp2.value());    
 }
 ```
 
@@ -90,7 +95,7 @@ public void metaTest() throws IOException {
 - `AnnotationAttributes`，注解属性抽象
 - `MetadataReader`，元信息读取抽象，通过`MetadataReaderFactory`获取
 
-而``AnnotationMetadataReadingVisitor`的内部实现使用`AnnotationAttributesReadingVisitor`类来递归的查找元注解。
+而``AnnotationMetadataReadingVisitor`的内部实现使用`AnnotationAttributesReadingVisitor`类来递归的查找元注解。反射的API类`AnnotationUtils`易用性则更强。
 
-那要满足真正意义上的派生，不仅仅时类型，spring为此开发了`@AliasFor`。`AnnotatedElementUtils#getMergedAnnotationAttributes`
+那要满足真正意义上的派生，不仅仅时类型，spring为此开发了`@AliasFor`。
 
