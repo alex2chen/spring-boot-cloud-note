@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.springkit</groupId>
-    <artifactId>dubbo-boot</artifactId>
+    <artifactId>Spring-Boot-Dubbo</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 

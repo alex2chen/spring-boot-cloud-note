@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.springkit</groupId>
+    <artifactId>moco-maven-plugin-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>moco-maven-plugin Test</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.springkit</groupId>
+                <artifactId>mock-maven-plugin</artifactId>
+                <configuration>
+                    <port>8081</port>
+                    <globalFile>src/test/resources/moco-test-global-config.json</globalFile>
+                    <stopPort>8082</stopPort>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

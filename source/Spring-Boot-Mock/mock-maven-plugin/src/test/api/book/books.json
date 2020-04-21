@@ -1,0 +1,33 @@
+[
+  {
+    "request": {
+      "method": "get",
+      "uri": "/book_list"
+    },
+    "response": {
+      "json": {
+        "books": [
+          "Python基础编程",
+          "wxPython实战",
+          "Java核心编程",
+          "Java编程思想"
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "method": "get",
+      "uri": "/book",
+      "queries": {
+        "book_name": "java"
+      }
+    },
+    "response": {
+      "json": {
+        "name": "Java核心编程",
+        "price": 50
+      }
+    }
+  }
+]

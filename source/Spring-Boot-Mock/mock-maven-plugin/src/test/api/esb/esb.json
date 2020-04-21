@@ -1,0 +1,28 @@
+[
+  {
+    "request": {
+      "uri": "/esb",
+      "json_paths": {
+        "$.header.serviceCode": "OMS_S_003201"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": "{\"foo\":\"bar\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/esb"
+    },
+    "response": {
+      "proxy": {
+        "url": "http://192.168.2.65:29998/esb",
+        "failover": "src/test/failover.json"
+      }
+    }
+  }
+]

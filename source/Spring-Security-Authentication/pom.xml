@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.springkit</groupId>
-    <artifactId>Security</artifactId>
+    <artifactId>Spring-Security-Authentication</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

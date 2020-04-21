@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github</groupId>
+    <artifactId>source</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+    <modules>
+        <module>Spring-Boot-Activemq</module>
+        <module>Spring-Boot-Actuator</module>
+        <module>Spring-Boot-Admin/Spring Boot Admin Client</module>
+        <module>Spring-Boot-Admin/Spring Boot Admin Server</module>
+        <module>Spring-Boot-Async-web</module>
+        <module>Spring-Boot-batch</module>
+        <module>Spring-Boot-Data-JPA</module>
+        <module>Spring-Boot-Data-MongoDB</module>
+        <module>Spring-Boot-Data-Neo4j</module>
+        <module>Spring-Boot-Data-Redis</module>
+        <module>Spring-Boot-Dubbo</module>
+        <module>Spring-Boot-Ehcache</module>
+        <module>Spring-Boot-Email</module>
+        <module>Spring-Boot-JdbcTemplate</module>
+        <module>Spring-Boot-Kafka</module>
+        <module>Spring-Boot-Mapper-PageHelper</module>
+        <module>Spring-Boot-Mock</module>
+        <module>Spring-Boot-Mock/mock-maven-plugin</module>
+        <module>Spring-Boot-MyBatis</module>
+        <module>Spring-Boot-MyBatis-MultiDataSource</module>
+        <module>Spring-Boot-Rabbitmq</module>
+        <module>Spring-Boot-Redis</module>
+        <module>Spring-Boot-Shiro-Authentication</module>
+        <module>Spring-Boot-Shiro-Authorization</module>
+        <module>Spring-Boot-Shiro-Ehcache</module>
+        <module>Spring-Boot-Shiro-Redis</module>
+        <module>Spring-Boot-Shiro-RememberMe</module>
+        <module>Spring-Boot-Shiro-Session</module>
+        <module>Spring-Boot-Shiro-Thymeleaf</module>
+        <module>Spring-Boot-Swagger2</module>
+        <module>Spring-Boot-Thymeleaf</module>
+        <module>Spring-Boot-Validator</module>
+        <module>Spring-Boot-WebFlux-MongoDB</module>
+        <module>Spring-Cloud-Config/Config-Client</module>
+        <module>Spring-Cloud-Config/Config-Client-Bus</module>
+        <module>Spring-Cloud-Config/Config-Server</module>
+        <module>Spring-Cloud-Config/Config-Server-Bus</module>
+        <module>Spring-Cloud-Consul/Server-Consumer</module>
+        <module>Spring-Cloud-Consul/Server-Proivder</module>
+        <module>Spring-Cloud-Eureka-Client</module>
+        <module>Spring-Cloud-Eureka-Service</module>
+        <module>Spring-Cloud-Feign</module>
+        <module>Spring-Cloud-Hystrix-Circuit-Breaker</module>
+        <module>Spring-Cloud-Hystrix-Dashboard-Turbine/Spring-Cloud-Hystrix-Circuit-Breaker</module>
+        <module>Spring-Cloud-Hystrix-Dashboard-Turbine/Spring-Cloud-Hystrix-Dashboard</module>
+        <module>Spring-Cloud-Hystrix-Dashboard-Turbine/Spring-Cloud-Turbine</module>
+        <module>Spring-Cloud-Hystrix-Dashboard-Turbine/Spring-Cloud-Turbine-Stream-rabbit</module>
+        <module>Spring-Cloud-Ribbon-LoadBalance</module>
+        <module>Spring-Cloud-Sleuth-Zipkin/Server-Provider1</module>
+        <module>Spring-Cloud-Sleuth-Zipkin/Server-Provider2</module>
+        <module>Spring-Cloud-Sleuth-Zipkin/Zipkin-Server</module>
+        <module>Spring-Cloud-Zuul</module>
+        <module>Spring-Security-Authentication</module>
+        <module>Spring-Security-RememberMe</module>
+        <module>Spring-Security-SmsCode</module>
+        <module>Spring-Security-ValidateCode</module>
+
+    </modules>
+
+</project>

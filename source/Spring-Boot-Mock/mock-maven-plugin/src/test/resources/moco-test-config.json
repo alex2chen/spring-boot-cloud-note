@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "uri": "/foo"
+    },
+    "response": {
+      "text": "bar"
+    }
+  },
+  {
+    "request": {
+      "uri": "/json",
+      "queries": {
+        "id": "1"
+      }
+    },
+    "response": {
+      "text": "foo1"
+    }
+  }
+  //,
+  //  {
+  //    "file_root": "src/test/api/book",
+  //    "include": "books.json"
+  //  },
+  //  {
+  //    "file_root": "src/test/api/esb",
+  //    "include": "esb.json"
+  //  }
+]
